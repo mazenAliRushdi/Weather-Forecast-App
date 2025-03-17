@@ -5,23 +5,23 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    background-color: #121212; /* خلفية غامقة */
-    color: #e0e0e0; /* لون نص فاتح */
+    background-color: #121212;
+    color: #e0e0e0;
 }
 
 .container {
     text-align: center;
     padding: 40px;
-    background-color: #1e1e1e; /* حاوية غامقة */
+    background-color: #1e1e1e;
     border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* ظل أعمق */
-    width: 400px; /* تحديد عرض الحاوية */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    width: 400px;
 }
 
 h1 {
     font-size: 2.5em;
     margin-bottom: 20px;
-    color: #bb86fc; /* لون العنوان */
+    color: #bb86fc;
 }
 
 .search-box {
@@ -68,4 +68,9 @@ h1 {
 
 #weather-data p {
     margin: 8px 0;
+}
+
+#weather-data img {
+    width: 100px;
+    margin: 10px 0;
 }
