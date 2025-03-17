@@ -1,10 +1,17 @@
 const apiKey = '4ed9648cb7249148f63c0ed4d1acae3f';
 const searchButton = document.getElementById('search-button');
 const cityInput = document.getElementById('city-input');
+const unitToggle = document.getElementById('unit-toggle');
+let units = 'metric';
+
+unitToggle.addEventListener('change', () => {
+    units = unitToggle.checked ? 'imperial' : 'metric';
+    console.log(units);
+});
 
 searchButton.addEventListener('click', () => {
     const city = cityInput.value;
-    const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
+    const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=${units}`;
 
     fetch(apiUrl)
         .then(response => response.json())
@@ -27,26 +34,51 @@ function displayForecast(data) {
     const forecastData = document.getElementById('weather-data');
     forecastData.innerHTML = '';
 
-    const dailyForecast = {};
+    const today = new Date().toISOString().split('T')[0];
+    let todayData = null;
+    const futureDays = {};
 
     data.list.forEach(item => {
         const date = item.dt_txt.split(' ')[0];
-        if (!dailyForecast[date]) {
-            dailyForecast[date] = item;
+        if (date === today && !todayData) {
+            todayData = item;
+        } else if (date !== today) {
+            if (!futureDays[date]) {
+                futureDays[date] = item;
+            }
         }
     });
 
-    for (const date in dailyForecast) {
-        const item = dailyForecast[date];
-        const iconCode = item.weather[0].icon;
+    if (todayData) {
+        const iconCode = todayData.weather[0].icon;
         const iconUrl = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
         forecastData.innerHTML += `
+            <div class="today-forecast">
+                <h3>Today</h3>
+                <img src="${iconUrl}" alt="Weather Icon">
+                <p>Temperature: ${todayData.main.temp}°${units === 'metric' ? 'C' : 'F'}</p>
+                <p>Description: ${todayData.weather[0].description}</p>
+            </div>
+        `;
+    }
+
+    const forecastContainer = document.createElement('div');
+    forecastContainer.className = 'forecast-container';
+
+    for (const date in futureDays) {
+        const item = futureDays[date];
+        const iconCode = item.weather[0].icon;
+        const iconUrl = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
+        forecastContainer.innerHTML += `
             <div class="forecast-item">
                 <h3>${date}</h3>
                 <img src="${iconUrl}" alt="Weather Icon">
-                <p>Temperature: ${item.main.temp}°C</p>
+                <p>Temperature: ${item.main.temp}°${units === 'metric' ? 'C' : 'F'}</p>
                 <p>Description: ${item.weather[0].description}</p>
             </div>
         `;
     }
+
+    console.log(units);
+    forecastData.appendChild(forecastContainer);
 }
