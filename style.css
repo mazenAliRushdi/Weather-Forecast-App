@@ -15,7 +15,8 @@ body {
     background-color: #1e1e1e;
     border-radius: 12px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-    width: 400px;
+    width: 90%;
+    max-width: 1200px;
 }
 
 h1 {
@@ -73,4 +74,60 @@ h1 {
 #weather-data img {
     width: 100px;
     margin: 10px 0;
+}
+
+#weather-data {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.forecast-item:first-child {
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.forecast-item:first-child h3 {
+    font-size: 1.5em !important;
+}
+
+.forecast-item {
+    border: 1px solid #3700b3;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.forecast-item h3 {
+    font-size: 1em !important;
+    color: #bb86fc;
+}
+
+.forecast-item img {
+    width: 6rem !important;
+}
+
+.forecast-item p {
+    font-size: 0.9em;
+}
+
+@media (min-width: 1200px) {
+    .forecast-item {
+        width: 18%;
+    }
+}
+
+@media (max-width: 1199px) and (min-width: 768px) {
+    .forecast-item {
+        width: 30%;
+    }
+}
+
+@media (max-width: 767px) {
+    .forecast-item {
+        width: 90%;
+    }
 }
